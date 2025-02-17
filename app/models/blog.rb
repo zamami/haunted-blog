@@ -1,4 +1,4 @@
-# frozen_string_literal: trueq
+# frozen_string_literal: true
 
 class Blog < ApplicationRecord
   belongs_to :user
@@ -10,7 +10,7 @@ class Blog < ApplicationRecord
   scope :published, -> { where('secret = FALSE') }
 
   scope :search, lambda { |term|
-    where("title LIKE ? OR content LIKE ?", "%#{term}%", "%#{term}%")
+    where('title LIKE ? OR content LIKE ?', "%#{term}%", "%#{term}%")
   }
 
   scope :default_order, -> { order(id: :desc) }
