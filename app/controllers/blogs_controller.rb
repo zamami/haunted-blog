@@ -15,6 +15,7 @@ class BlogsController < ApplicationController
     return unless @blog.secret? && @blog.user != current_user
 
     raise ActiveRecord::RecordNotFound
+  end
 
   def new
     @blog = Blog.new
