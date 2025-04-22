@@ -9,6 +9,8 @@ class Blog < ApplicationRecord
 
   scope :published, -> { where('secret = FALSE') }
 
+  scope :unpublished, -> { where('secret = TRUE') }
+
   scope :search, lambda { |term|
     where('title LIKE ? OR content LIKE ?', "%#{term}%", "%#{term}%")
   }
@@ -17,5 +19,11 @@ class Blog < ApplicationRecord
 
   def owned_by?(target_user)
     user == target_user
+  end
+
+  def self.select_blog(current_user)
+    return published.or(where(user: current_user)) if current_user
+
+    published
   end
 end
